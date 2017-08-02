@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS veiculo (
 CREATE TABLE IF NOT EXISTS negociacao (
     id INT PRIMARY KEY,
     data DATE,
+    desconto DECIMAL,
 		id_pessoa INT REFERENCES pessoa(id),
 		id_funcionario INT REFERENCES funcionario(id),
 		id_contrato INT REFERENCES contrato(id),
