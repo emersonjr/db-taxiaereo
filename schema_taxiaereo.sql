@@ -7,16 +7,23 @@ CREATE TABLE IF NOT EXISTS pessoa (
 		tel_celular STRING,
 		tel_residencial STRING,
 		tel_comercial STRING,
-	  logradouro STRING,
+		id_endereco INT REFERENCES endereco(id),
+		index (id_endereco),
+);
+ 
+CREATE TABLE IF NOT EXISTS endereco (
+    id INT PRIMARY KEY,
+		logradouro STRING,
 		cep STRING,
 		numero INT,
 );
- 
+
 CREATE TABLE IF NOT EXISTS cliente (
     id_pessoas INT REFERENCES pessoas(id),
     data_cadastro DATE,
 		id_pessoa_indicada INT,
 		index (id_pessoa),
+		PRIMARY KEY (id_pessoas),
 );
 
 CREATE TABLE IF NOT EXISTS funcionario (
