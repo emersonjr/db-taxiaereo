@@ -27,12 +27,25 @@ CREATE TABLE IF NOT EXISTS cliente (
 );
 
 CREATE TABLE IF NOT EXISTS funcionario (
-    id INT PRIMARY KEY,
+    id_pessoa INT REFERENCES pessoa(id),
     salario DECIMAL,
     data_contrato DATE,
+    tipo STRING(1),
+    index(id_pessoa),
+    PRIMARY KEY (id_pessoa)
+);
+
+CREATE TABLE IF NOT EXISTS vendedor (
+    id_vendedor INT REFERENCES funcionario(id_pessoa),
+    index(id_vendedor),
+    PRIMARY KEY (id_vendedor)
+);
+
+CREATE TABLE IF NOT EXISTS piloto (
+    id_piloto INT REFERENCES funcionario(id_pessoa),
     breve INT,
-    id_pessoa INT REFERENCES pessoa(id),
-    index(id_pessoa)
+    index(id_piloto),
+    PRIMARY KEY (id_piloto)
 );
 
 CREATE TABLE IF NOT EXISTS contrato (
@@ -54,10 +67,10 @@ CREATE TABLE IF NOT EXISTS negociacao (
     id INT PRIMARY KEY,
     data DATE,
     desconto DECIMAL,
-    id_pessoa INT REFERENCES pessoa(id),
-    id_funcionario INT REFERENCES funcionario(id),
+    id_cliente INT REFERENCES cliente(id_pessoa),
+    id_funcionario INT REFERENCES funcionario(id_pessoa),
     id_contrato INT REFERENCES contrato(id),
-    index(id_pessoa),
+    index(id_cliente),
     index(id_funcionario),
     index(id_contrato)
 );
@@ -71,8 +84,8 @@ CREATE TABLE IF NOT EXISTS voo (
     duracao TIMESTAMP,
     origem STRING,
     destino STRING,
-    id_funcionario INT REFERENCES funcionario(id),
+    id_piloto INT REFERENCES piloto(id_piloto),
     n_chassi INT REFERENCES veiculo(n_chassi),
-    index(id_funcionario),
+    index(id_piloto),
     index(n_chassi)
 );
